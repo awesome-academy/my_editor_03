@@ -1,6 +1,6 @@
 package com.sun_asterisk.myeditor03.utils
 
-class CommomUtils {
+class CommonUtils {
     interface Genres {
         companion object {
             const val PHOTO = "Photos"
