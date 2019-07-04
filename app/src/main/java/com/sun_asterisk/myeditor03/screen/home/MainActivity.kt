@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun innitView() {
         val pagerAdapter = PagerAdapter(supportFragmentManager)
-        pagerAdapter.addFragment(PhotosFragment.getInstance(), CommonUtils.Genres.PHOTO)
-        pagerAdapter.addFragment(CollectionsFragment.getInstance(), CommonUtils.Genres.COLLECTION)
+        pagerAdapter.addFragment(PhotosFragment.instance(), CommonUtils.PHOTO)
+        pagerAdapter.addFragment(CollectionsFragment.instance(), CommonUtils.COLLECTION)
         viewPagerHome.adapter = pagerAdapter
         tabLayoutHome.setupWithViewPager(viewPagerHome)
     }

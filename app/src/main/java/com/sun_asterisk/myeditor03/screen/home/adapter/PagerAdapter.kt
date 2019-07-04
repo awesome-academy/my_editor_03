@@ -6,23 +6,23 @@ import android.support.v4.app.FragmentPagerAdapter
 import java.util.ArrayList
 
 class PagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-    private val fragmentList = ArrayList<Fragment>()
-    private val fragmentTitleList = ArrayList<String>()
+    private val fragments = ArrayList<Fragment>()
+    private val fragmentsTitle = ArrayList<String>()
 
     override fun getItem(i: Int): Fragment {
-        return fragmentList[i]
+        return fragments[i]
     }
 
     override fun getCount(): Int {
-        return fragmentList.size
+        return fragments.size
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return fragmentTitleList[position]
+        return fragmentsTitle[position]
     }
 
     fun addFragment(fragment: Fragment, title: String) {
-        fragmentList.add(fragment)
-        fragmentTitleList.add(title)
+        fragments.add(fragment)
+        fragmentsTitle.add(title)
     }
 }
