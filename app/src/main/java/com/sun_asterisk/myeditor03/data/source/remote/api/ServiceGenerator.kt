@@ -13,7 +13,7 @@ object ServiceGenerator {
     private const val READ_TIMEOUT = 5000
     private const val WRITE_TIMEOUT = 5000
     private const val CONNECT_TIMEOUT = 10000
-    fun create(): MovieService {
+    fun create(): PhotoService {
         val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)!!
         val httpClient: OkHttpClient.Builder = OkHttpClient.Builder()
             .readTimeout(READ_TIMEOUT.toLong(), TimeUnit.MILLISECONDS)
@@ -28,6 +28,6 @@ object ServiceGenerator {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
         val retrofit: Retrofit = builder.client(httpClient.build()).build()
-        return retrofit.create(MovieService::class.java)
+        return retrofit.create(PhotoService::class.java)
     }
 }

@@ -9,7 +9,6 @@ class PhotoRepository private constructor(
 ) {
 
     companion object {
-        @Volatile
         private var sInstance: PhotoRepository? = null
 
         @JvmStatic
