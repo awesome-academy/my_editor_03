@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 
 abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
-    private lateinit var mListener: OnItemRecyclerViewClickListener<T>
+    private lateinit var listener: OnItemRecyclerViewClickListener<T>
     private var data = mutableListOf<T>()
     fun setOnItemClickListener(listener: OnItemRecyclerViewClickListener<T>) {
-        mListener = listener
+        this.listener = listener
     }
 
     fun replaceItem(item: List<T>) {
@@ -56,6 +56,6 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
     override fun getItemViewType(position: Int): Int = layout(position)
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
-        holder.bindData(data[position], mListener)
+        holder.bindData(data[position], listener)
     }
 }

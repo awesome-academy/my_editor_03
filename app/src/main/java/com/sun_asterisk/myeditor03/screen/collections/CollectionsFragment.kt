@@ -32,6 +32,7 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
         super.onViewCreated(view, savedInstanceState)
         initView()
         initData()
+        registerLiveData()
     }
 
     override fun onItemClick(data: Collection) {
@@ -49,16 +50,19 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
     private fun initData() {
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(CollectionViewModel::class.java)
-        viewModel.init(page)
-        viewModel.collectionsLiveData.observe(this, Observer {
-            if (it != null) {
-                collectionAdapter.addItems(it)
-            }
-        })
+        viewModel.getCollections(page)
         recyclerViewCollections.addOnScrollListener(object : EndlessScrollListener() {
             override fun onLoadMore() {
                 page++
-                viewModel.init(page)
+                viewModel.getCollections(page)
+            }
+        })
+    }
+
+    private fun registerLiveData() {
+        viewModel.collectionsLiveData.observe(this, Observer {
+            if (it != null) {
+                collectionAdapter.addItems(it)
             }
         })
     }

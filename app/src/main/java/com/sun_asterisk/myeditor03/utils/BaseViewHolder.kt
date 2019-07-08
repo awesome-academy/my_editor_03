@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 
 abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    private val mViews = SparseArrayCompat<View>()
+    private val views = SparseArrayCompat<View>()
 
     abstract fun bindData(data: T, listener: OnItemRecyclerViewClickListener<T>)
 

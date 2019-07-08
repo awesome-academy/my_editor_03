@@ -15,7 +15,7 @@ class CollectionViewModel (private val photoRepository: PhotoRepository): ViewMo
     var collectionsLiveData = MutableLiveData<List<Collection>>()
     private val compositeDisposable = CompositeDisposable()
 
-    fun init(page: Int) {
+    fun getCollections(page: Int) {
         compositeDisposable.add(
             photoRepository.getCollections(page)
                 .subscribeOn(Schedulers.io())
