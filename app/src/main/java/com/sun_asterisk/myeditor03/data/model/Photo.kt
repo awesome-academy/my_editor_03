@@ -15,5 +15,7 @@ data class Photo(
     @SerializedName("urls")
     var urlImage: UrlImage,
     @SerializedName("location")
-    var location: Location
+    var location: Location,
+    @SerializedName("downloads")
+    var download: Int? = null
 ) : Parcelable
