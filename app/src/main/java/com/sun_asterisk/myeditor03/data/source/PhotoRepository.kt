@@ -1,6 +1,7 @@
 package com.sun_asterisk.myeditor03.data.source
 
 import com.sun_asterisk.myeditor03.data.model.Collection
+import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoDataSource.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.PhotoDataSource.PhotoRemoteDataSource
 import io.reactivex.Observable
@@ -12,6 +13,10 @@ class PhotoRepository private constructor(
 
     fun getCollections(page: Int): Observable<List<Collection>> {
         return remote.getCollections(page)
+    }
+
+    fun getPhotos(page: Int): Observable<List<Photo>>{
+        return remote.getPhotos(page)
     }
 
     companion object {
