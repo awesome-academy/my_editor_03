@@ -61,9 +61,7 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
 
     private fun registerLiveData() {
         viewModel.collectionsLiveData.observe(this, Observer {
-            if (it != null) {
-                collectionAdapter.addItems(it)
-            }
+            collectionAdapter.addItems(it)
         })
     }
 
