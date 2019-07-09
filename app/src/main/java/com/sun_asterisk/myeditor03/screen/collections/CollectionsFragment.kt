@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.sun_asterisk.myeditor03.R
 import com.sun_asterisk.myeditor03.data.model.Collection
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
@@ -38,19 +39,19 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
     }
 
     override fun onItemClick(data: Collection) {
-        addFragmentToFragment(R.id.layoutContainer,CollectionsDetailFragment.instance(data),true)
+        addFragmentToFragment(R.id.layoutContainer, CollectionsDetailFragment.instance(data), true)
     }
 
     private fun initView() {
         collectionAdapter = CollectionAdapter()
-        collectionAdapter.setOnItemClickListener(this)
         recyclerViewCollections.adapter = collectionAdapter
-        val local: PhotoLocalDataSource = PhotoLocalDataSource.instance()
-        val remote: PhotoRemoteDataSource = PhotoRemoteDataSource.instance()
-        photoRepository = PhotoRepository.instance(local, remote)
+        collectionAdapter.setOnItemClickListener(this)
     }
 
     private fun initData() {
+        val local: PhotoLocalDataSource = PhotoLocalDataSource.instance()
+        val remote: PhotoRemoteDataSource = PhotoRemoteDataSource.instance()
+        photoRepository = PhotoRepository.instance(local, remote)
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(CollectionViewModel::class.java)
         viewModel.getCollections(page)
@@ -66,11 +67,12 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
         viewModel.collectionsLiveData.observe(this, Observer {
             collectionAdapter.addItems(it!!)
         })
+        viewModel.errorLiveData.observe(this, Observer {
+            Toast.makeText(view!!.context, it!!.message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     companion object {
-        fun instance(): CollectionsFragment {
-            return CollectionsFragment()
-        }
+        fun instance() = CollectionsFragment()
     }
 }

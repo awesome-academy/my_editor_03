@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 
 class CollectionViewModel(private val photoRepository: PhotoRepository) : ViewModel() {
     var collectionsLiveData = MutableLiveData<List<Collection>>()
+    var errorLiveData = MutableLiveData<Throwable>()
     private val compositeDisposable = CompositeDisposable()
 
     fun getCollections(page: Int) {
@@ -18,12 +19,12 @@ class CollectionViewModel(private val photoRepository: PhotoRepository) : ViewMo
             photoRepository.getCollections(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data -> data.let { collectionsLiveData.value = it } }, this::handleError)
+                .subscribe({ data ->
+                    data.let { collectionsLiveData.value = it }
+                }, { error ->
+                    error.let { errorLiveData.value = it }
+                })
         )
-    }
-
-    private fun handleError(error: Throwable) {
-        Log.i("onError", error.message)
     }
 
     override fun onCleared() {

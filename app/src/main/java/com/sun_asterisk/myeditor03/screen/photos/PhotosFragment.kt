@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.sun_asterisk.myeditor03.R
 import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
@@ -40,14 +41,14 @@ class PhotosFragment : Fragment(), OnItemRecyclerViewClickListener<Photo> {
 
     private fun initView() {
         photosAdapter = PhotosAdapter()
-        photosAdapter.setOnItemClickListener(this)
         recyclerViewPhoto.adapter = photosAdapter
-        val local: PhotoLocalDataSource = PhotoLocalDataSource.instance()
-        val remote: PhotoRemoteDataSource = PhotoRemoteDataSource.instance()
-        photoRepository = PhotoRepository.instance(local, remote)
+        photosAdapter.setOnItemClickListener(this)
     }
 
     private fun initData() {
+        val local: PhotoLocalDataSource = PhotoLocalDataSource.instance()
+        val remote: PhotoRemoteDataSource = PhotoRemoteDataSource.instance()
+        photoRepository = PhotoRepository.instance(local, remote)
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(PhotosViewModel::class.java)
         viewModel.getPhotos(page)
@@ -63,11 +64,12 @@ class PhotosFragment : Fragment(), OnItemRecyclerViewClickListener<Photo> {
         viewModel.photoLiveData.observe(this, Observer {
             photosAdapter.addItems(it!!)
         })
+        viewModel.errorLiveData.observe(this, Observer {
+            Toast.makeText(view!!.context, it!!.message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     companion object {
-        fun instance(): PhotosFragment {
-            return PhotosFragment()
-        }
+        fun instance() = PhotosFragment()
     }
 }
