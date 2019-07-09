@@ -1,4 +1,4 @@
-package com.sun_asterisk.myeditor03.screen.photos.adapter
+package com.sun_asterisk.myeditor03.screen.collectiondetail.adapter
 
 import android.view.View
 import com.sun_asterisk.myeditor03.R
@@ -7,10 +7,10 @@ import com.sun_asterisk.myeditor03.utils.BaseAdapter
 import com.sun_asterisk.myeditor03.utils.BaseViewHolder
 import com.sun_asterisk.myeditor03.utils.OnItemRecyclerViewClickListener
 import com.sun_asterisk.myeditor03.utils.loadImageUrl
-import kotlinx.android.synthetic.main.item_photo.view.imagePhoto
+import kotlinx.android.synthetic.main.item_photo_by_collection.view.imageViewDetailPoster
 
-class PhotosAdapter : BaseAdapter<Photo>() {
-    override fun layout(row: Int): Int = R.layout.item_photo
+class CollectionDetailAdapter : BaseAdapter<Photo>() {
+    override fun layout(row: Int): Int = R.layout.item_photo_by_collection
 
     override fun viewHolder(view: View): BaseViewHolder<Photo> = PhotoAdapterViewHolder(view)
 
@@ -20,7 +20,7 @@ class PhotosAdapter : BaseAdapter<Photo>() {
         ) : BaseViewHolder<Photo>(view) {
 
             override fun bindData(data: Photo, listener: OnItemRecyclerViewClickListener<Photo>) {
-                view.imagePhoto.loadImageUrl(data.urlImage.regular)
+                view.imageViewDetailPoster.loadImageUrl(data.urlImage.regular)
                 view.setOnClickListener { listener.onItemClick(data) }
             }
         }

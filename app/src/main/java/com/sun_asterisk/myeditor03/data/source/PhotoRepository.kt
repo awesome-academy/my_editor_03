@@ -15,8 +15,12 @@ class PhotoRepository private constructor(
         return remote.getCollections(page)
     }
 
-    fun getPhotos(page: Int): Observable<List<Photo>>{
+    fun getPhotos(page: Int): Observable<List<Photo>> {
         return remote.getPhotos(page)
+    }
+
+    fun getPhotosByCollection(id: String, page: Int): Observable<List<Photo>> {
+        return remote.getPhotosByCollection(id, page)
     }
 
     companion object {

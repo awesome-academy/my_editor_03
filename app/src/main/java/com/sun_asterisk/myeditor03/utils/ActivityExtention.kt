@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 
 fun AppCompatActivity.addFragmentToActivity(
     @IdRes containerViewId: Int,
-    fragment: Fragment, tag: String = fragment::class.java.simpleName, addToBackStack: Boolean = false
+    fragment: Fragment, addToBackStack: Boolean = false, tag: String = fragment::class.java.simpleName
 ) {
     val transaction = supportFragmentManager.beginTransaction()
     transaction.add(containerViewId, fragment, tag)
