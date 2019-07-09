@@ -38,7 +38,7 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
     }
 
     override fun onItemClick(data: Collection) {
-        addFragmentToFragment(R.id.layoutContainer,CollectionsDetailFragment.instance())
+        addFragmentToFragment(R.id.layoutContainer,CollectionsDetailFragment.instance(data),true)
     }
 
     private fun initView() {

@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(layout.activity_main)
         addFragmentToActivity(
             R.id.layoutContainer,
-            HomeFragment.instance())
+            HomeFragment.instance(),true)
     }
 }

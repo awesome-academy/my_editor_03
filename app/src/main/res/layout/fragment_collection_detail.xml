@@ -30,12 +30,13 @@
 
     <TextView
         android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"
-        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_8"
+        android:enabled="true"
         android:textColor="@android:color/black"
         android:textSize="@dimen/sp_18"
         android:textStyle="bold"

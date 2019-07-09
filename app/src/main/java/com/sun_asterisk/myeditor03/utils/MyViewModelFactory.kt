@@ -3,6 +3,7 @@ package com.sun_asterisk.myeditor03.utils
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
+import com.sun_asterisk.myeditor03.screen.collectiondetail.CollectionDetailViewModel
 import com.sun_asterisk.myeditor03.screen.collections.CollectionViewModel
 import com.sun_asterisk.myeditor03.screen.photos.PhotosViewModel
 
@@ -13,6 +14,7 @@ class MyViewModelFactory(private val photoRepository: PhotoRepository) : ViewMod
         return when (modelClass) {
             CollectionViewModel::class.java -> CollectionViewModel(photoRepository) as T
             PhotosViewModel::class.java -> PhotosViewModel(photoRepository) as T
+            CollectionDetailViewModel::class.java -> CollectionDetailViewModel(photoRepository) as T
             else -> super.create(modelClass)
         }
     }
