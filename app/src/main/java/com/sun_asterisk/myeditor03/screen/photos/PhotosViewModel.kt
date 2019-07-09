@@ -1,24 +1,24 @@
-package com.sun_asterisk.myeditor03.screen.collections
+package com.sun_asterisk.myeditor03.screen.photos
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.sun_asterisk.myeditor03.data.model.Collection
+import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class CollectionViewModel(private val photoRepository: PhotoRepository) : ViewModel() {
-    var collectionsLiveData = MutableLiveData<List<Collection>>()
+class PhotosViewModel(private val photoRepository: PhotoRepository) : ViewModel() {
+    var photoLiveData = MutableLiveData<List<Photo>>()
     private val compositeDisposable = CompositeDisposable()
 
-    fun getCollections(page: Int) {
+    fun getPhotos(page: Int) {
         compositeDisposable.add(
-            photoRepository.getCollections(page)
+            photoRepository.getPhotos(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data -> data.let { collectionsLiveData.value = it } }, this::handleError)
+                .subscribe({ data -> data.let { photoLiveData.value = it } }, this::handleError)
         )
     }
 

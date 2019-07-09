@@ -1,6 +1,7 @@
 package com.sun_asterisk.myeditor03.data.source
 
 import com.sun_asterisk.myeditor03.data.model.Collection
+import com.sun_asterisk.myeditor03.data.model.Photo
 import io.reactivex.Observable
 
 interface PhotoDataSource {
@@ -9,5 +10,6 @@ interface PhotoDataSource {
 
     interface PhotoRemoteDataSource {
         fun getCollections(page: Int): Observable<List<Collection>>
+        fun getPhotos(page: Int): Observable<List<Photo>>
     }
 }
