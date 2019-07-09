@@ -22,8 +22,7 @@ import com.sun_asterisk.myeditor03.utils.addFragmentToFragment
 import kotlinx.android.synthetic.main.fragment_collections.recyclerViewCollections
 
 class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collection> {
-    private lateinit var collectionAdapter: CollectionAdapter
-    private lateinit var photoRepository: PhotoRepository
+    private val collectionAdapter: CollectionAdapter by lazy { CollectionAdapter() }
     private lateinit var viewModel: CollectionViewModel
     private var page: Int = 1
 
@@ -43,15 +42,13 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
     }
 
     private fun initView() {
-        collectionAdapter = CollectionAdapter()
         recyclerViewCollections.adapter = collectionAdapter
         collectionAdapter.setOnItemClickListener(this)
     }
 
     private fun initData() {
-        val local: PhotoLocalDataSource = PhotoLocalDataSource.instance()
-        val remote: PhotoRemoteDataSource = PhotoRemoteDataSource.instance()
-        photoRepository = PhotoRepository.instance(local, remote)
+        val photoRepository =
+            PhotoRepository.instance(PhotoLocalDataSource.instance(), PhotoRemoteDataSource.instance())
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(CollectionViewModel::class.java)
         viewModel.getCollections(page)

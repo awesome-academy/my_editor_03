@@ -21,7 +21,7 @@ import com.sun_asterisk.myeditor03.utils.EndlessScrollListener
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
 import com.sun_asterisk.myeditor03.utils.OnItemRecyclerViewClickListener
 import com.sun_asterisk.myeditor03.utils.removeFragment
-import com.sun_asterisk.myeditor03.utils.setCircleImage
+import com.sun_asterisk.myeditor03.utils.loadCircleImageUrl
 import kotlinx.android.synthetic.main.fragment_collection_detail.imageBack
 import kotlinx.android.synthetic.main.fragment_collection_detail.imageViewPoster
 import kotlinx.android.synthetic.main.fragment_collection_detail.recyclerPhotoByCollection
@@ -31,8 +31,7 @@ import kotlinx.android.synthetic.main.fragment_collection_detail.textViewTotalCo
 class CollectionsDetailFragment : Fragment(), OnItemRecyclerViewClickListener<Photo>, OnClickListener {
     private val TARGET = "h=128&w=128"
     private val REPLACEMENT = "h=256&w=256"
-    private lateinit var collectionDetailAdapter: CollectionDetailAdapter
-    private lateinit var photoRepository: PhotoRepository
+    private val collectionDetailAdapter: CollectionDetailAdapter by lazy { CollectionDetailAdapter() }
     private lateinit var viewModel: CollectionDetailViewModel
     private var page: Int = 1
     private var collection: Collection? = null
@@ -59,16 +58,14 @@ class CollectionsDetailFragment : Fragment(), OnItemRecyclerViewClickListener<Ph
     }
 
     private fun initView() {
-        collectionDetailAdapter = CollectionDetailAdapter()
         recyclerPhotoByCollection.adapter = collectionDetailAdapter
         collectionDetailAdapter.setOnItemClickListener(this)
         imageBack.setOnClickListener(this)
     }
 
     private fun initData() {
-        val local: PhotoLocalDataSource = PhotoLocalDataSource.instance()
-        val remote: PhotoRemoteDataSource = PhotoRemoteDataSource.instance()
-        photoRepository = PhotoRepository.instance(local, remote)
+        val photoRepository =
+            PhotoRepository.instance(PhotoLocalDataSource.instance(), PhotoRemoteDataSource.instance())
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(CollectionDetailViewModel::class.java)
         collection = arguments!!.getParcelable(CommonUtils.ACTION_TYPE)
@@ -84,7 +81,7 @@ class CollectionsDetailFragment : Fragment(), OnItemRecyclerViewClickListener<Ph
     private fun bindView() {
         textViewTitle.text = collection!!.title
         textViewTotalCount.text = collection!!.totalPhotoToString()
-        imageViewPoster.setCircleImage(collection!!.user.profileImage.LargeImage.replace(TARGET, REPLACEMENT))
+        imageViewPoster.loadCircleImageUrl(collection!!.user.profileImage.LargeImage.replace(TARGET, REPLACEMENT))
     }
 
     private fun registerLiveData() {
