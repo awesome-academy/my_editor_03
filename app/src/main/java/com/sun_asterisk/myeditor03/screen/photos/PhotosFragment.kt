@@ -61,7 +61,7 @@ class PhotosFragment : Fragment(), OnItemRecyclerViewClickListener<Photo> {
 
     private fun registerLiveData() {
         viewModel.photoLiveData.observe(this, Observer {
-            photosAdapter.addItems(it)
+            photosAdapter.addItems(it!!)
         })
     }
 

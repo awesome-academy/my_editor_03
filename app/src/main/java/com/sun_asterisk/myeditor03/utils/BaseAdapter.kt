@@ -24,12 +24,10 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
         notifyItemChanged(data.indexOf(item))
     }
 
-    fun addItems(item: List<T>?) {
+    fun addItems(item: List<T>) {
         val originSize = data.size
-        if (item != null) {
-            data.addAll(item)
-            notifyItemRangeInserted(originSize, item.size)
-        }
+        data.addAll(item)
+        notifyItemRangeInserted(originSize, item.size)
     }
 
     fun removeItem(item: T) {

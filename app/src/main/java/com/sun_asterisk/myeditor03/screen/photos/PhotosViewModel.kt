@@ -18,7 +18,7 @@ class PhotosViewModel(private val photoRepository: PhotoRepository) : ViewModel(
             photoRepository.getPhotos(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ photoLiveData.value = it }, this::handleError)
+                .subscribe({ data -> data.let { photoLiveData.value = it } }, this::handleError)
         )
     }
 
