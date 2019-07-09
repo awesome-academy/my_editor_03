@@ -12,10 +12,12 @@ import com.sun_asterisk.myeditor03.data.model.Collection
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
 import com.sun_asterisk.myeditor03.data.source.local.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.PhotoRemoteDataSource
+import com.sun_asterisk.myeditor03.screen.collectiondetail.CollectionsDetailFragment
 import com.sun_asterisk.myeditor03.screen.collections.adapter.CollectionAdapter
 import com.sun_asterisk.myeditor03.utils.EndlessScrollListener
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
 import com.sun_asterisk.myeditor03.utils.OnItemRecyclerViewClickListener
+import com.sun_asterisk.myeditor03.utils.addFragmentToFragment
 import kotlinx.android.synthetic.main.fragment_collections.recyclerViewCollections
 
 class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collection> {
@@ -36,6 +38,7 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
     }
 
     override fun onItemClick(data: Collection) {
+        addFragmentToFragment(R.id.layoutContainer,CollectionsDetailFragment.instance())
     }
 
     private fun initView() {
