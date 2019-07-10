@@ -56,20 +56,15 @@ class PhotoDetailFragment : Fragment(), OnClickListener {
             R.id.imageViewBack -> removeFragment(PhotoDetailFragment::class.java.simpleName)
             R.id.buttonDownload -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (activity!!.checkCallingOrSelfPermission(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        ) != PackageManager.PERMISSION_GRANTED
+                    if (activity!!.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED
                     ) {
                         requestPermissions(
                             arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                             DOWNLOAD_REQUEST_CODE
                         )
-                    } else {
-                        downloadPhoto()
-                    }
-                } else {
-                    downloadPhoto()
-                }
+                    } else downloadPhoto()
+                } else downloadPhoto()
             }
         }
     }
