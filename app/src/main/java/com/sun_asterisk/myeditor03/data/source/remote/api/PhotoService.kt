@@ -17,4 +17,7 @@ interface PhotoService {
 
     @GET("collections/{id}/photos")
     fun getPhotosByCollection(@Path("id") id: String, @Query("page") page: Int): Observable<List<Photo>>
+
+    @GET("photos/{id}")
+    fun getPhotoDetail(@Path("id") id: String): Observable<Photo>
 }

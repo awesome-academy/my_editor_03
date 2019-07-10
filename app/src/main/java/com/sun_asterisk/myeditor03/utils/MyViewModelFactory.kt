@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
 import com.sun_asterisk.myeditor03.screen.collectiondetail.CollectionDetailViewModel
 import com.sun_asterisk.myeditor03.screen.collections.CollectionViewModel
+import com.sun_asterisk.myeditor03.screen.photodetail.PhotoDetailViewModel
 import com.sun_asterisk.myeditor03.screen.photos.PhotosViewModel
 
 @Suppress("UNCHECKED_CAST")
@@ -15,6 +16,7 @@ class MyViewModelFactory(private val photoRepository: PhotoRepository) : ViewMod
             CollectionViewModel::class.java -> CollectionViewModel(photoRepository) as T
             PhotosViewModel::class.java -> PhotosViewModel(photoRepository) as T
             CollectionDetailViewModel::class.java -> CollectionDetailViewModel(photoRepository) as T
+            PhotoDetailViewModel::class.java -> PhotoDetailViewModel(photoRepository) as T
             else -> super.create(modelClass)
         }
     }

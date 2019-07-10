@@ -23,6 +23,10 @@ class PhotoRepository private constructor(
         return remote.getPhotosByCollection(id, page)
     }
 
+    fun getPhotoDetail(id: String): Observable<Photo> {
+        return remote.getPhotoDetail(id)
+    }
+
     companion object {
         private var sInstance: PhotoRepository? = null
 

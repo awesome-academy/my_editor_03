@@ -12,5 +12,6 @@ interface PhotoDataSource {
         fun getCollections(page: Int): Observable<List<Collection>>
         fun getPhotos(page: Int): Observable<List<Photo>>
         fun getPhotosByCollection(id: String, page: Int): Observable<List<Photo>>
+        fun getPhotoDetail(id: String): Observable<Photo>
     }
 }
