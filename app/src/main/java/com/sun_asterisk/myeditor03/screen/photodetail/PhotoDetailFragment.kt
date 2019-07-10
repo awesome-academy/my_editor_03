@@ -1,8 +1,15 @@
 package com.sun_asterisk.myeditor03.screen.photodetail
 
+import android.Manifest
+import android.app.DownloadManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +25,7 @@ import com.sun_asterisk.myeditor03.utils.CommonUtils
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
 import com.sun_asterisk.myeditor03.utils.loadImageUrl
 import com.sun_asterisk.myeditor03.utils.removeFragment
+import kotlinx.android.synthetic.main.fragment_photo_detail.buttonDownload
 import kotlinx.android.synthetic.main.fragment_photo_detail.imagePhotoDetail
 import kotlinx.android.synthetic.main.fragment_photo_detail.imageViewBack
 import kotlinx.android.synthetic.main.fragment_photo_detail.textViewDownload
@@ -29,6 +37,8 @@ import kotlinx.android.synthetic.main.fragment_photo_detail.textViewView
 class PhotoDetailFragment : Fragment(), OnClickListener {
     private lateinit var viewModel: PhotoDetailViewModel
     private var photo: Photo? = null
+    private val DOWNLOAD_REQUEST_CODE = 6969
+    private val PHOTO_EXTENSION = ".png"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_photo_detail, container, false)
@@ -44,11 +54,35 @@ class PhotoDetailFragment : Fragment(), OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.imageViewBack -> removeFragment(PhotoDetailFragment::class.java.simpleName)
+            R.id.buttonDownload -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (activity!!.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        requestPermissions(
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            DOWNLOAD_REQUEST_CODE
+                        )
+                    } else downloadPhoto()
+                } else downloadPhoto()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == DOWNLOAD_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            downloadPhoto()
         }
     }
 
     private fun initView() {
         imageViewBack.setOnClickListener(this)
+        buttonDownload.setOnClickListener(this)
     }
 
     private fun initData() {
@@ -76,6 +110,24 @@ class PhotoDetailFragment : Fragment(), OnClickListener {
         textViewView.text = photo.viewToSting()
         imagePhotoDetail.loadImageUrl(photo.urlImage.regular)
         textViewLocation.text = photo.location?.title
+    }
+
+    private fun downloadPhoto() {
+        val uri = Uri.parse(photo!!.urlImage.regular)
+        val manager = activity!!.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        manager.enqueue(
+            DownloadManager.Request(uri).setNotificationVisibility(
+                DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
+            )
+                .setAllowedNetworkTypes(
+                    DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE
+                )
+                .setDestinationInExternalPublicDir(
+                    Environment.DIRECTORY_PICTURES,
+                    photo!!.id + PHOTO_EXTENSION
+                )
+                .setDescription(photo!!.description)
+        )
     }
 
     companion object {
