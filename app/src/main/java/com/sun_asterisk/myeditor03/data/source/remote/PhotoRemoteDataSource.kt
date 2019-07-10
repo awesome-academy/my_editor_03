@@ -10,6 +10,10 @@ import io.reactivex.Observable
 class PhotoRemoteDataSource private constructor(private val photoService: PhotoService) :
     PhotoDataSource.PhotoRemoteDataSource {
 
+    override fun getPhotoDetail(id: String): Observable<Photo> {
+        return photoService.getPhotoDetail(id)
+    }
+
     override fun getPhotosByCollection(id: String, page: Int): Observable<List<Photo>> {
         return photoService.getPhotosByCollection(id, page)
     }
