@@ -20,8 +20,8 @@ import net.alhazmy13.imagefilter.ImageFilter
 import net.alhazmy13.imagefilter.ImageFilter.Filter
 
 class FilterFragment : Fragment(), OnItemRecyclerViewClickListener<ImageFilter.Filter>, OnClickListener {
-    private var bitmap: Bitmap? = null
     val bitmapLiveData = MutableLiveData<Bitmap>()
+    private var bitmap: Bitmap? = null
     private val filterViewModel: FilterViewModel by lazy { FilterViewModel() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,7 +31,6 @@ class FilterFragment : Fragment(), OnItemRecyclerViewClickListener<ImageFilter.F
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
-        loadImage()
     }
 
     override fun onItemClick(data: Filter) {
@@ -59,13 +58,10 @@ class FilterFragment : Fragment(), OnItemRecyclerViewClickListener<ImageFilter.F
     private fun setUp() {
         filterViewModel.initData()
         recyclerViewFilter.adapter = filterViewModel.adapter
+        imageViewFilter.setImageBitmap(bitmap)
         filterViewModel.adapter.setOnItemClickListener(this)
         textViewSave.setOnClickListener(this)
         textViewCancel.setOnClickListener(this)
-    }
-
-    private fun loadImage() {
-        imageViewFilter.setImageBitmap(bitmap)
     }
 
     companion object {
