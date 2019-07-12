@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/textViewCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/cancel"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/save"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewAdjust"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintBottom_toTopOf="@id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@id/textViewCancel" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewAdjust">
+
+        <TextView
+            android:id="@+id/textViewBrightness"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:text="@string/brightness"
+            app:layout_constraintBottom_toTopOf="@+id/textViewContrast"
+            app:layout_constraintEnd_toEndOf="@+id/textViewContrast"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textViewContrast"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SeekBar
+            android:id="@+id/seekBarBrightness"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:max="200"
+            android:progress="100"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewBrightness"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewBrightness"
+            app:layout_constraintTop_toTopOf="@+id/textViewBrightness" />
+
+        <TextView
+            android:id="@+id/textViewContrast"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="@string/contrast"
+            app:layout_constraintBottom_toTopOf="@+id/textViewSaturation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBrightness" />
+
+        <SeekBar
+            android:id="@+id/seekBarContrast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:max="255"
+            android:progress="125"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewContrast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewContrast"
+            app:layout_constraintTop_toTopOf="@+id/textViewContrast" />
+
+        <TextView
+            android:id="@+id/textViewSaturation"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:text="@string/saturation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textViewContrast"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textViewContrast"
+            app:layout_constraintTop_toBottomOf="@+id/textViewContrast" />
+
+        <SeekBar
+            android:id="@+id/seekBarSaturation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:max="30"
+            android:progress="0"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewSaturation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewSaturation"
+            app:layout_constraintTop_toTopOf="@+id/textViewSaturation" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
