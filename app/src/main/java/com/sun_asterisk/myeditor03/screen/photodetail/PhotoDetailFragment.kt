@@ -6,6 +6,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,11 +23,15 @@ import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
 import com.sun_asterisk.myeditor03.data.source.local.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.PhotoRemoteDataSource
+import com.sun_asterisk.myeditor03.screen.editphoto.EditFragment
 import com.sun_asterisk.myeditor03.utils.CommonUtils
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
+import com.sun_asterisk.myeditor03.utils.addFragmentToFragment
 import com.sun_asterisk.myeditor03.utils.loadImageUrl
 import com.sun_asterisk.myeditor03.utils.removeFragment
+import kotlinx.android.synthetic.main.fragment_filter.imageViewFilter
 import kotlinx.android.synthetic.main.fragment_photo_detail.buttonDownload
+import kotlinx.android.synthetic.main.fragment_photo_detail.buttonEdit
 import kotlinx.android.synthetic.main.fragment_photo_detail.imagePhotoDetail
 import kotlinx.android.synthetic.main.fragment_photo_detail.imageViewBack
 import kotlinx.android.synthetic.main.fragment_photo_detail.textViewDownload
@@ -66,6 +72,13 @@ class PhotoDetailFragment : Fragment(), OnClickListener {
                     } else downloadPhoto()
                 } else downloadPhoto()
             }
+            R.id.buttonEdit -> {
+                addFragmentToFragment(
+                    R.id.layoutContainer,
+                    EditFragment.instance(photo!!),
+                    true
+                )
+            }
         }
     }
 
@@ -83,6 +96,7 @@ class PhotoDetailFragment : Fragment(), OnClickListener {
     private fun initView() {
         imageViewBack.setOnClickListener(this)
         buttonDownload.setOnClickListener(this)
+        buttonEdit.setOnClickListener(this)
     }
 
     private fun initData() {

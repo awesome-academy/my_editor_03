@@ -3,4 +3,12 @@
     <string name="imagePoster">ImagePoster</string>
     <string name="download">Download</string>
     <string name="edit">Edit</string>
+    <string name="title_filter">Filter</string>
+    <string name="title_adjust">Adjust</string>
+    <string name="title_crop">Crop</string>
+    <string name="title_smile">Smile</string>
+    <string name="title_draw">Draw</string>
+    <string name="Scroller">mScroller</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 </resources>
