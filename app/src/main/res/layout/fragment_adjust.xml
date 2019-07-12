@@ -113,7 +113,5 @@
                 android:max="30"
                 android:progress="0" />
         </LinearLayout>
-
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

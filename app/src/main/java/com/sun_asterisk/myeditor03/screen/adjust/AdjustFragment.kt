@@ -23,9 +23,6 @@ import kotlinx.android.synthetic.main.fragment_adjust.textViewSave
 class AdjustFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnClickListener {
     var bitmap: Bitmap? = null
     val adjustLiveData = MutableLiveData<Bitmap>()
-    private val BRIGHTNESS = 100f
-    private val CONTRAST = 170f
-    private val STATURATION = .10f
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_adjust, container, false)
@@ -83,6 +80,10 @@ class AdjustFragment : Fragment(), SeekBar.OnSeekBarChangeListener, OnClickListe
     }
 
     companion object {
+        private val BRIGHTNESS = 100f
+        private val CONTRAST = 170f
+        private val STATURATION = .10f
+
         fun instance() = AdjustFragment()
     }
 }

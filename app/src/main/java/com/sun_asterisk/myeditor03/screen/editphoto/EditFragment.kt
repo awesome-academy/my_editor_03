@@ -38,7 +38,6 @@ class EditFragment : Fragment(), OnClickListener {
     }
 
     override fun onClick(v: View?) {
-
         when (v?.id) {
             R.id.textViewFilter -> {
                 filterFragment.setCurrentBitmap((imageViewEdit.drawable as BitmapDrawable).bitmap)
