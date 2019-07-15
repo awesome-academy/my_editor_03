@@ -34,7 +34,7 @@ class HomeFragment : Fragment(), OnClickListener {
     private fun initView(view: View) {
         val adapter = PagerAdapter(fragmentManager)
         adapter.addFragment(PhotosFragment.instance(CommonUtils.ACTION_LOAD_PHOTO), CommonUtils.PHOTO)
-        adapter.addFragment(CollectionsFragment.instance(), CommonUtils.COLLECTION)
+        adapter.addFragment(CollectionsFragment.instance(CommonUtils.ACTION_LOAD_PHOTO), CommonUtils.COLLECTION)
         view.viewPagerHome.adapter = adapter
         view.tabLayoutHome.setupWithViewPager(view.viewPagerHome)
         view.imageSearch.setOnClickListener(this)

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +16,19 @@ import com.sun_asterisk.myeditor03.data.source.local.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.PhotoRemoteDataSource
 import com.sun_asterisk.myeditor03.screen.collectiondetail.CollectionsDetailFragment
 import com.sun_asterisk.myeditor03.screen.collections.adapter.CollectionAdapter
+import com.sun_asterisk.myeditor03.utils.CommonUtils
 import com.sun_asterisk.myeditor03.utils.EndlessScrollListener
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
 import com.sun_asterisk.myeditor03.utils.OnItemRecyclerViewClickListener
-import com.sun_asterisk.myeditor03.utils.addFragmentToFragment
+import com.sun_asterisk.myeditor03.utils.addFragmentToActivity
 import kotlinx.android.synthetic.main.fragment_collections.recyclerViewCollections
 
 class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collection> {
     private val collectionAdapter: CollectionAdapter by lazy { CollectionAdapter() }
-    private lateinit var viewModel: CollectionViewModel
     private var page: Int = 1
+    private var actionType: Int = 1
+    private var query: String = ""
+    private lateinit var viewModel: CollectionViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_collections, container, false)
@@ -38,10 +42,15 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
     }
 
     override fun onItemClick(data: Collection) {
-        addFragmentToFragment(R.id.layoutContainer, CollectionsDetailFragment.instance(data), true)
+        (activity as AppCompatActivity).addFragmentToActivity(
+            R.id.layoutContainer,
+            CollectionsDetailFragment.instance(data),
+            true
+        )
     }
 
     private fun initView() {
+        actionType = arguments!!.getInt(CommonUtils.ACTION_TYPE)
         recyclerViewCollections.adapter = collectionAdapter
         collectionAdapter.setOnItemClickListener(this)
     }
@@ -51,11 +60,14 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
             PhotoRepository.instance(PhotoLocalDataSource.instance(), PhotoRemoteDataSource.instance())
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(CollectionViewModel::class.java)
-        viewModel.getCollections(page)
+        if (actionType == CommonUtils.ACTION_LOAD_PHOTO) {
+            viewModel.getCollections(page)
+        }
         recyclerViewCollections.addOnScrollListener(object : EndlessScrollListener() {
             override fun onLoadMore() {
                 page++
-                viewModel.getCollections(page)
+                if (actionType == 1) viewModel.getCollections(page)
+                else viewModel.getSearchCollections(query, page)
             }
         })
     }
@@ -69,7 +81,18 @@ class CollectionsFragment : Fragment(), OnItemRecyclerViewClickListener<Collecti
         })
     }
 
+    fun searchCollection(query: String) {
+        this.query = query
+        page = CommonUtils.ACTION_LOAD_PHOTO
+        collectionAdapter.clearList()
+        viewModel.getSearchCollections(query, page)
+    }
+
     companion object {
-        fun instance() = CollectionsFragment()
+        fun instance(action: Int) = CollectionsFragment().apply {
+            val args = Bundle()
+            args.putInt(CommonUtils.ACTION_TYPE, action)
+            arguments = args
+        }
     }
 }

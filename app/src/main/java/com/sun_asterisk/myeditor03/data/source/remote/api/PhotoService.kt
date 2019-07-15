@@ -2,6 +2,7 @@ package com.sun_asterisk.myeditor03.data.source.remote.api
 
 import com.sun_asterisk.myeditor03.data.model.Collection
 import com.sun_asterisk.myeditor03.data.model.Photo
+import com.sun_asterisk.myeditor03.data.source.remote.responce.SearchCollectionResponse
 import com.sun_asterisk.myeditor03.data.source.remote.responce.SearchPhotoResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
@@ -24,4 +25,7 @@ interface PhotoService {
 
     @GET("search/photos")
     fun getSearchPhoto(@Query("query") query: String, @Query("page") page: Int): Observable<SearchPhotoResponse>
+
+    @GET("search/collections")
+    fun getSearchCollection(@Query("query") query: String, @Query("page") page: Int): Observable<SearchCollectionResponse>
 }
