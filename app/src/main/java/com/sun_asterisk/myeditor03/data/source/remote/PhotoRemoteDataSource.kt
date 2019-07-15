@@ -5,10 +5,15 @@ import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.api.PhotoService
 import com.sun_asterisk.myeditor03.data.source.remote.api.ServiceGenerator
+import com.sun_asterisk.myeditor03.data.source.remote.responce.SearchPhotoResponse
 import io.reactivex.Observable
 
 class PhotoRemoteDataSource private constructor(private val photoService: PhotoService) :
     PhotoDataSource.PhotoRemoteDataSource {
+
+    override fun getSearchPhoto(query: String, page: Int): Observable<SearchPhotoResponse> {
+        return photoService.getSearchPhoto(query, page)
+    }
 
     override fun getPhotoDetail(id: String): Observable<Photo> {
         return photoService.getPhotoDetail(id)

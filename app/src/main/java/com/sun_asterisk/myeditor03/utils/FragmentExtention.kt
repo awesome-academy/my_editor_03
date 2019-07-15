@@ -1,9 +1,12 @@
 package com.sun_asterisk.myeditor03.utils
 
+import android.content.Context
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 fun Fragment.addFragmentToFragment(
     @IdRes containerViewId: Int,
@@ -20,4 +23,12 @@ fun Fragment.addFragmentToFragment(
 
 fun Fragment.removeFragment(rootTag: String) {
     fragmentManager!!.popBackStack(rootTag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+}
+
+fun Fragment.hideKeyboard() {
+    val view = activity?.findViewById<View>(android.R.id.content)
+    if (view != null) {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

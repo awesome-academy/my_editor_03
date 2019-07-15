@@ -26,6 +26,18 @@ class PhotosViewModel(private val photoRepository: PhotoRepository) : ViewModel(
         )
     }
 
+    fun getSearchPhotos(query: String, page: Int){
+        compositeDisposable.add(
+            photoRepository.getSearchPhoto(query, page)  .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ data ->
+                    data.let { photoLiveData.value = it.photos }
+                }, { error ->
+                    error.let { errorLiveData.value = it }
+                })
+        )
+    }
+
     override fun onCleared() {
         compositeDisposable.clear()
     }
