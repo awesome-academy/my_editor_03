@@ -24,7 +24,7 @@ import com.sun_asterisk.myeditor03.screen.photos.PhotosFragment
 import com.sun_asterisk.myeditor03.screen.search.adapter.SearchAdapter
 import com.sun_asterisk.myeditor03.utils.CommonUtils
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
-import com.sun_asterisk.myeditor03.utils.OnItemClickListener
+import com.sun_asterisk.myeditor03.utils.OnItemSearchClickListener
 import com.sun_asterisk.myeditor03.utils.OnItemRecyclerViewClickListener
 import com.sun_asterisk.myeditor03.utils.hideKeyboard
 import com.sun_asterisk.myeditor03.utils.removeFragment
@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.fragment_search.viewPager
 import java.util.Collections
 
 class SearchFragment : Fragment(), OnClickListener, TextView.OnEditorActionListener,
-    OnItemRecyclerViewClickListener<Search>, OnItemClickListener {
+    OnItemRecyclerViewClickListener<Search>, OnItemSearchClickListener {
 
     private lateinit var viewModel: SearchViewModel
     private val searchAdapter: SearchAdapter by lazy { SearchAdapter() }
@@ -65,7 +65,7 @@ class SearchFragment : Fragment(), OnClickListener, TextView.OnEditorActionListe
         searchData(data.title!!)
     }
 
-    override fun onItemClickListener(search: Search) {
+    override fun onItemSearchClick(search: Search) {
         viewModel.removeSearchHistory(search)
     }
 
