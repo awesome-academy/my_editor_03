@@ -14,4 +14,6 @@
     <string name="brightness">Brightness</string>
     <string name="contrast">Contrast</string>
     <string name="saturation">Saturation</string>
+    <string name="enter_keyword">Enter keyword</string>
+    <string name="search_history">Search history</string>
 </resources>
