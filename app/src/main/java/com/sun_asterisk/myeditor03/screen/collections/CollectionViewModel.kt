@@ -2,7 +2,6 @@ package com.sun_asterisk.myeditor03.screen.collections
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
 import com.sun_asterisk.myeditor03.data.model.Collection
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,6 +20,19 @@ class CollectionViewModel(private val photoRepository: PhotoRepository) : ViewMo
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->
                     data.let { collectionsLiveData.value = it }
+                }, { error ->
+                    error.let { errorLiveData.value = it }
+                })
+        )
+    }
+
+    fun getSearchCollections(query: String, page: Int) {
+        compositeDisposable.add(
+            photoRepository.getSearchCollection(query, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ data ->
+                    data.let { collectionsLiveData.value = it.collections }
                 }, { error ->
                     error.let { errorLiveData.value = it }
                 })

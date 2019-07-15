@@ -6,7 +6,7 @@ import com.sun_asterisk.myeditor03.data.model.Collection
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SearchCollectionResponce(
+data class SearchCollectionResponse(
     @SerializedName("results")
     var collections: List<Collection>? = null
 ) : Parcelable

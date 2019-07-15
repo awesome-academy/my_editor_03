@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_search.viewPager
 
 class SearchFragment : Fragment(), OnClickListener, TextView.OnEditorActionListener {
     private val photosFragment: PhotosFragment by lazy { PhotosFragment.instance(CommonUtils.ACTION_LOAD_SEARCH) }
-    private val collectionsFragment: CollectionsFragment by lazy { CollectionsFragment.instance() }
+    private val collectionsFragment: CollectionsFragment by lazy { CollectionsFragment.instance(CommonUtils.ACTION_LOAD_SEARCH) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -49,6 +49,7 @@ class SearchFragment : Fragment(), OnClickListener, TextView.OnEditorActionListe
         ) {
             hideKeyboard()
             photosFragment.searchPhoto(editTextSearch.text.toString())
+            collectionsFragment.searchCollection(editTextSearch.text.toString())
             groupSearchHistory.visibility = View.GONE
             viewPager.visibility = View.VISIBLE
             return true
