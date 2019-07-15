@@ -28,7 +28,7 @@ fun Fragment.removeFragment(rootTag: String) {
 fun Fragment.hideKeyboard() {
     val view = activity?.findViewById<View>(android.R.id.content)
     if (view != null) {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        val inputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

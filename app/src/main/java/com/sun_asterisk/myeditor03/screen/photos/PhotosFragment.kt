@@ -28,7 +28,7 @@ class PhotosFragment : Fragment(), OnItemRecyclerViewClickListener<Photo> {
     private var page: Int = 1
     private var actionType: Int = 1
     private lateinit var viewModel: PhotosViewModel
-    private lateinit var query: String
+    private var query: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_photos, container, false)
