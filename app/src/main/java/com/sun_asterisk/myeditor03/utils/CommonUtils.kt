@@ -7,4 +7,6 @@ object CommonUtils {
     const val LIKE = " Likes"
     const val VIEW = " Views"
     const val DOWNLOAD = " Download"
+    const val ACTION_LOAD_PHOTO = 1
+    const val ACTION_LOAD_SEARCH = 0
 }

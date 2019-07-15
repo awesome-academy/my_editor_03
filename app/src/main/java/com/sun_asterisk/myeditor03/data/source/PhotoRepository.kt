@@ -4,6 +4,7 @@ import com.sun_asterisk.myeditor03.data.model.Collection
 import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoDataSource.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.PhotoDataSource.PhotoRemoteDataSource
+import com.sun_asterisk.myeditor03.data.source.remote.responce.SearchPhotoResponse
 import io.reactivex.Observable
 
 class PhotoRepository private constructor(
@@ -25,6 +26,10 @@ class PhotoRepository private constructor(
 
     fun getPhotoDetail(id: String): Observable<Photo> {
         return remote.getPhotoDetail(id)
+    }
+
+    fun getSearchPhoto(query: String, page: Int): Observable<SearchPhotoResponse> {
+        return remote.getSearchPhoto(query, page)
     }
 
     companion object {
