@@ -10,6 +10,7 @@ import android.widget.ImageView
 
 class HandleZoomEvent(private val imageView: ImageView) : View.OnTouchListener, OnAnimationChangeListener,
     GestureDetector.OnDoubleTapListener {
+
     private val matrixValues = FloatArray(9)
     private val matrix = Matrix()
     private val displayRectF = RectF()
@@ -59,7 +60,9 @@ class HandleZoomEvent(private val imageView: ImageView) : View.OnTouchListener, 
     }
 
     override fun onScale(scaleFactor: Float, focusX: Float, focusY: Float) {
-        if (scale < MAX_SCALE_VALUE && scaleFactor > DEFAULT_SCALE_FACTOR || scale > MIN_SCALE_VALUE && scaleFactor < DEFAULT_SCALE_FACTOR) {
+        if (scale < MAX_SCALE_VALUE && scaleFactor > DEFAULT_SCALE_FACTOR
+            || scale > MIN_SCALE_VALUE && scaleFactor < DEFAULT_SCALE_FACTOR
+        ) {
             matrix.postScale(scaleFactor, scaleFactor, focusX, focusY)
             checkAndDisplayMatrix()
         }
