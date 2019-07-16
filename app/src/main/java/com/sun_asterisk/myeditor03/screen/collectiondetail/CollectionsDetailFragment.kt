@@ -13,6 +13,7 @@ import com.sun_asterisk.myeditor03.R
 import com.sun_asterisk.myeditor03.data.model.Collection
 import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
+import com.sun_asterisk.myeditor03.data.source.local.PhotoDatabase
 import com.sun_asterisk.myeditor03.data.source.local.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.PhotoRemoteDataSource
 import com.sun_asterisk.myeditor03.screen.collectiondetail.adapter.CollectionDetailAdapter
@@ -22,8 +23,8 @@ import com.sun_asterisk.myeditor03.utils.EndlessScrollListener
 import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
 import com.sun_asterisk.myeditor03.utils.OnItemRecyclerViewClickListener
 import com.sun_asterisk.myeditor03.utils.addFragmentToFragment
-import com.sun_asterisk.myeditor03.utils.removeFragment
 import com.sun_asterisk.myeditor03.utils.loadCircleImageUrl
+import com.sun_asterisk.myeditor03.utils.removeFragment
 import kotlinx.android.synthetic.main.fragment_collection_detail.imageBack
 import kotlinx.android.synthetic.main.fragment_collection_detail.imageViewPoster
 import kotlinx.android.synthetic.main.fragment_collection_detail.recyclerPhotoByCollection
@@ -67,8 +68,12 @@ class CollectionsDetailFragment : Fragment(), OnItemRecyclerViewClickListener<Ph
     }
 
     private fun initData() {
+        val photoDataBase: PhotoDatabase = PhotoDatabase.instance(context!!.applicationContext)
         val photoRepository =
-            PhotoRepository.instance(PhotoLocalDataSource.instance(), PhotoRemoteDataSource.instance())
+            PhotoRepository.instance(
+                PhotoLocalDataSource.instance(photoDataBase.photoDAO()),
+                PhotoRemoteDataSource.instance()
+            )
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(CollectionDetailViewModel::class.java)
         collection = arguments!!.getParcelable(CommonUtils.ACTION_TYPE)

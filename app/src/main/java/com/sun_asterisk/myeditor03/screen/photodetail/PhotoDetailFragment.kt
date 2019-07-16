@@ -6,8 +6,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +19,7 @@ import android.widget.Toast
 import com.sun_asterisk.myeditor03.R
 import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
+import com.sun_asterisk.myeditor03.data.source.local.PhotoDatabase
 import com.sun_asterisk.myeditor03.data.source.local.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.PhotoRemoteDataSource
 import com.sun_asterisk.myeditor03.screen.editphoto.EditFragment
@@ -29,7 +28,6 @@ import com.sun_asterisk.myeditor03.utils.MyViewModelFactory
 import com.sun_asterisk.myeditor03.utils.addFragmentToFragment
 import com.sun_asterisk.myeditor03.utils.loadImageUrl
 import com.sun_asterisk.myeditor03.utils.removeFragment
-import kotlinx.android.synthetic.main.fragment_filter.imageViewFilter
 import kotlinx.android.synthetic.main.fragment_photo_detail.buttonDownload
 import kotlinx.android.synthetic.main.fragment_photo_detail.buttonEdit
 import kotlinx.android.synthetic.main.fragment_photo_detail.imagePhotoDetail
@@ -100,8 +98,12 @@ class PhotoDetailFragment : Fragment(), OnClickListener {
     }
 
     private fun initData() {
+        val photoDataBase: PhotoDatabase = PhotoDatabase.instance(context!!.applicationContext)
         val photoRepository =
-            PhotoRepository.instance(PhotoLocalDataSource.instance(), PhotoRemoteDataSource.instance())
+            PhotoRepository.instance(
+                PhotoLocalDataSource.instance(photoDataBase.photoDAO()),
+                PhotoRemoteDataSource.instance()
+            )
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(PhotoDetailViewModel::class.java)
         photo = arguments!!.getParcelable(CommonUtils.ACTION_TYPE)

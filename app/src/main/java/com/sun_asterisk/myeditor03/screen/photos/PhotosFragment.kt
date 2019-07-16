@@ -12,6 +12,7 @@ import android.widget.Toast
 import com.sun_asterisk.myeditor03.R
 import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.data.source.PhotoRepository
+import com.sun_asterisk.myeditor03.data.source.local.PhotoDatabase
 import com.sun_asterisk.myeditor03.data.source.local.PhotoLocalDataSource
 import com.sun_asterisk.myeditor03.data.source.remote.PhotoRemoteDataSource
 import com.sun_asterisk.myeditor03.screen.photodetail.PhotoDetailFragment
@@ -56,8 +57,12 @@ class PhotosFragment : Fragment(), OnItemRecyclerViewClickListener<Photo> {
     }
 
     private fun initData() {
+        val photoDataBase: PhotoDatabase = PhotoDatabase.instance(context!!.applicationContext)
         val photoRepository =
-            PhotoRepository.instance(PhotoLocalDataSource.instance(), PhotoRemoteDataSource.instance())
+            PhotoRepository.instance(
+                PhotoLocalDataSource.instance(photoDataBase.photoDAO()),
+                PhotoRemoteDataSource.instance()
+            )
         viewModel = ViewModelProviders.of(this, MyViewModelFactory(photoRepository))
             .get(PhotosViewModel::class.java)
         if (actionType == CommonUtils.ACTION_LOAD_PHOTO) {
