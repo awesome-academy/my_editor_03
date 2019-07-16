@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import com.sun_asterisk.myeditor03.R
+import com.sun_asterisk.myeditor03.custom.zoom.HandleZoomEvent
 import com.sun_asterisk.myeditor03.data.model.Photo
 import com.sun_asterisk.myeditor03.screen.adjust.AdjustFragment
 import com.sun_asterisk.myeditor03.screen.filter.FilterFragment
@@ -60,6 +61,7 @@ class EditFragment : Fragment(), OnClickListener {
     }
 
     private fun initView() {
+        HandleZoomEvent(imageViewEdit)
         textViewFilter.setOnClickListener(this)
         imageViewBack.setOnClickListener(this)
         textViewAdjust.setOnClickListener(this)
